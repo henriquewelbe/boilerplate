@@ -30,10 +30,10 @@
   <link href="main.css" rel="stylesheet">
 </head>
   <body>
-    <div class="content">
+    <div class="content" data-template={{template}}>
       {{> navigation}}
       {{> preloader}}
-      {{{body}}}
+      {{> @partial-block }}
     </div>
   </body>
 </html>

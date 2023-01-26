@@ -13,30 +13,40 @@ import { ifCond } from './handlebars/helpers'
 // }
 
 export default () => {
-  const input = {
-    main: path.resolve('views/pages/homepage.html'),
-    about: path.resolve('views/pages/about/index.html')
+  // automatizar pra pegar todas as páginas do /pages
+  const pageData = {
+    '/index.html': {
+      name: 'homepage'
+    },
+    '/about.html': {
+      name: 'about'
+    }
   }
 
   return defineConfig({
-    root: './views',
+    root: './views/pages',
+    publicDir: '../public',
+
+    server: {
+      port: 3000,
+      open: true
+    },
 
     build: {
-      outDir: '../dist',
-      rollupOptions: {
-        input
-      }
+      outDir: '../dist'
     },
 
     plugins: [
       handlebars({
-        layoutDirectory: path.resolve(__dirname, 'views'),
         partialDirectory: path.resolve(__dirname, 'views/partials'),
+
         helpers: {
           ifCond
         },
-        context: {
-          name: 'homepage'
+
+        // implementar DynamicRouter
+        context (pagePath) {
+          return pageData[pagePath]
         }
       })
     ]
