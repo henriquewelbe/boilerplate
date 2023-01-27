@@ -1,4 +1,4 @@
-# POC Boilerplate Vanilla
+# POC vanilla js boilerplate
 
 ## Installation
 
