@@ -8,7 +8,7 @@
 
   <title>Boilerplate</title>
 
-  <meta name="description" content="Floema - beautifulu jewelery">
+  <meta name="description" content="Floema - beautiful jewelery">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -27,11 +27,11 @@
   <meta name="twitter:description" content=meta.data.description>
   <!-- <meta property="twitter:image" content=meta.data.image ? meta.data.image.url : ''> -->
 
-  <link href="main.css" rel="stylesheet">
+  <script type="module" src="{{resolve-from-root '../../src/js/app.js'}}"></script>
 </head>
-  <body>
+<body>
     <div class="content" data-template={{template}}>
-      {{> navigation}}
+      {{> navbar}}
       {{> preloader}}
       {{> @partial-block }}
     </div>

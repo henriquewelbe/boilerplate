@@ -1,7 +1,8 @@
 import handlebars from 'vite-plugin-handlebars'
 import path from 'path'
 import { defineConfig } from 'vite'
-import { ifCond } from './handlebars/helpers'
+import { ifCond } from './src/handlebars/helpers'
+import { fileURLToPath, URL } from 'url'
 
 // const pageData = {
 //   '/index.html': {
@@ -11,6 +12,9 @@ import { ifCond } from './handlebars/helpers'
 //     title: 'Sub Page'
 //   }
 // }
+
+// const teste = path.resolve(__dirname, 'src/js/app.js')
+// console.log('o path é : ', teste)
 
 export default () => {
   // automatizar pra pegar todas as páginas do /pages
@@ -25,7 +29,7 @@ export default () => {
 
   return defineConfig({
     root: './views/pages',
-    publicDir: '../public',
+    publicDir: '../../public',
 
     server: {
       port: 3000,
@@ -33,7 +37,19 @@ export default () => {
     },
 
     build: {
-      outDir: '../dist'
+      outDir: '../../dist',
+      assetsDir: './',
+      copyPublicDir: true
+    },
+
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('./src/jsapp', import.meta.url))
+      }
+    },
+
+    rollupInputOptions: {
+      input: path.resolve(__dirname, 'src/js/app.js')
     },
 
     plugins: [
@@ -49,6 +65,8 @@ export default () => {
           return pageData[pagePath]
         }
       })
-    ]
+    ],
+
+    appType: 'mpa'
   })
 }
