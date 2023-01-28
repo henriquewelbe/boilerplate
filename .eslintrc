@@ -6,5 +6,8 @@
   },
   "parserOptions": {
     "ecmasVersion": 2020
+  },
+  "rules": {
+    "no-new": 0
   }
 }

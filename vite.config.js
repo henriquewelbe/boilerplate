@@ -4,25 +4,13 @@ import { defineConfig } from 'vite'
 import { ifCond } from './src/handlebars/helpers'
 import { fileURLToPath, URL } from 'url'
 
-// const pageData = {
-//   '/index.html': {
-//     title: 'Main Page'
-//   },
-//   '/nested/subpage.html': {
-//     title: 'Sub Page'
-//   }
-// }
-
-// const teste = path.resolve(__dirname, 'src/js/app.js')
-// console.log('o path é : ', teste)
-
 export default () => {
   // automatizar pra pegar todas as páginas do /pages
   const pageData = {
     '/index.html': {
       name: 'homepage'
     },
-    '/about.html': {
+    '/about/index.html': {
       name: 'about'
     }
   }
@@ -49,7 +37,8 @@ export default () => {
     },
 
     rollupInputOptions: {
-      input: path.resolve(__dirname, 'src/js/app.js')
+      // input: path.resolve(__dirname, 'src/js/app.js')
+      input: pageData
     },
 
     plugins: [
