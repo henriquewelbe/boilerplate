@@ -7,12 +7,8 @@ import { fileURLToPath, URL } from 'url'
 export default () => {
   // automatizar pra pegar todas as páginas do /pages
   const pageData = {
-    '/index.html': {
-      name: 'homepage'
-    },
-    '/about/index.html': {
-      name: 'about'
-    }
+    '/index.html': {},
+    '/about/index.html': {}
   }
 
   return defineConfig({

@@ -1,13 +1,20 @@
 import '../scss/style.scss'
+
+import each from 'lodash/each'
+
 import Homepage from './pages/Homepage'
 import About from './pages/About'
-import each from 'lodash/each'
+
+import Preloader from './components/Preloader'
+import Scroll from './components/Scroll'
 
 class App {
   constructor () {
     this.createContent()
     this.createPages()
     this.addLinkListeners()
+    this.createPreloader()
+    this.createScroll()
   }
 
   createContent () {
@@ -25,6 +32,17 @@ class App {
 
     this.page.create()
     this.page.show()
+  }
+
+  createPreloader () {
+    this.preloader = new Preloader()
+    this.preloader.once('completed', () => {
+      this.preloader.destroy()
+    })
+  }
+
+  createScroll () {
+    this.scroll = new Scroll()
   }
 
   async onChange (url) {
