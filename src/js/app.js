@@ -7,6 +7,7 @@ import About from './pages/About'
 
 import Preloader from './components/Preloader'
 import Scroll from './components/Scroll'
+import Cursor from './components/Cursor'
 
 class App {
   constructor () {
@@ -20,6 +21,12 @@ class App {
   createContent () {
     this.content = document.querySelector('.content')
     this.template = this.content.getAttribute('data-template')
+  }
+
+  createCursor () {
+    this.cursor = new Cursor()
+
+    window.cursor = this.cursor
   }
 
   createPages () {
@@ -39,18 +46,34 @@ class App {
     this.preloader.once('completed', () => {
       this.preloader.destroy()
     })
+
+    window.preloader = this.preloader
   }
 
   createScroll () {
     this.scroll = new Scroll()
+
+    window.scroll = this.scroll
   }
 
-  async onChange (url) {
+  onPopState () {
+    this.onChange({
+      url: window.location.pathname,
+      push: false
+    })
+  }
+
+  async onChange ({ url, push = true }) {
     await this.page.hide()
     const request = await window.fetch(url)
 
     if (request.status === 200) {
       const nextPageHtml = await request.text()
+
+      if (push) {
+        window.history.pushState({}, '', url)
+      }
+
       const fakeDiv = document.createElement('div')
       fakeDiv.innerHTML = nextPageHtml
 
@@ -64,11 +87,15 @@ class App {
 
       this.page.create()
       this.page.show()
+
+      this.cursor.addEventListeners()
+
       this.addLinkListeners()
     }
   }
 
   addLinkListeners () {
+    // colocar if pra não adicionar se o href for email, tel, etc
     const links = document.querySelectorAll('a')
 
     each(links, link => {
@@ -80,6 +107,10 @@ class App {
         this.onChange(href)
       }
     })
+  }
+
+  addEventListeners () {
+    window.addEventListener('popstate', this.onPopState.bind(this))
   }
 }
 
