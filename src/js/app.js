@@ -16,6 +16,7 @@ class App {
     this.addLinkListeners()
     this.createPreloader()
     this.createScroll()
+    this.createCursor()
   }
 
   createContent () {
