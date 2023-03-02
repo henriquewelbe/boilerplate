@@ -3,17 +3,13 @@ import path from 'path'
 import { defineConfig } from 'vite'
 import { ifCond } from './src/handlebars/helpers'
 import { fileURLToPath, URL } from 'url'
+import getPagesData from './rollup.config.js'
 
 export default () => {
-  // automatizar pra pegar todas as páginas do /pages
-  const pageData = {
-    '/index.html': {},
-    '/about/index.html': {}
-  }
-
   return defineConfig({
     root: './views/pages',
     publicDir: '../../public',
+    appType: 'mpa',
 
     server: {
       port: 3000,
@@ -33,8 +29,7 @@ export default () => {
     },
 
     rollupInputOptions: {
-      // input: path.resolve(__dirname, 'src/js/app.js')
-      input: pageData
+      input: getPagesData().then(data => data.input)
     },
 
     plugins: [
@@ -47,11 +42,9 @@ export default () => {
 
         // implementar DynamicRouter
         context (pagePath) {
-          return pageData[pagePath]
+          return getPagesData().then(data => data.input[pagePath])
         }
       })
-    ],
-
-    appType: 'mpa'
+    ]
   })
 }
