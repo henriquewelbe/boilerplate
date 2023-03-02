@@ -100,12 +100,14 @@ class App {
     const links = document.querySelectorAll('a')
 
     each(links, link => {
-      link.parentElement.parentElement.classList.add('teste')
       link.onclick = event => {
-        event.preventDefault()
+        if (event.target.target !== '_blank') {
+          event.preventDefault()
 
-        const href = event.target.href
-        this.onChange(href)
+          const { href } = event.target
+
+          this.onChange({ url: href })
+        }
       }
     })
   }
